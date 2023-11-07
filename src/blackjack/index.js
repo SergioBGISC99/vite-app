@@ -5,6 +5,7 @@ import {
   pedirCarta,
   crearCarta,
   turnoComputadora,
+  acumularPuntos,
 } from "./usecases";
 
 let deck = [],
@@ -40,27 +41,45 @@ const inicializarJuego = (numJugadores = 2) => {
 // Eventos
 btnPedir.addEventListener("click", () => {
   const carta = pedirCarta(deck);
-  const puntosJugador = acumularPuntos(carta, 0);
+  const puntosJugador = acumularPuntos(carta, 0, puntosJugadores, puntosHTML);
 
-  crearCarta(carta, 0);
+  crearCarta(carta, 0, divCartasJugadores);
 
   if (puntosJugador > 21) {
     console.warn("Has perdido");
     btnPedir.disabled = true;
     btnDetener.disabled = true;
-    turnoComputadora(puntosJugador, deck, puntosJugadores);
+    turnoComputadora(
+      puntosJugador,
+      deck,
+      puntosJugadores,
+      puntosHTML,
+      divCartasJugadores
+    );
   } else if (puntosJugador === 21) {
     console.warn("¿21? Genial");
     btnPedir.disabled = true;
     btnDetener.disabled = true;
-    turnoComputadora(puntosJugador, deck, puntosJugadores);
+    turnoComputadora(
+      puntosJugador,
+      deck,
+      puntosJugadores,
+      puntosHTML,
+      divCartasJugadores
+    );
   }
 });
 
 btnDetener.addEventListener("click", () => {
   btnPedir.disabled = true;
   btnDetener.disabled = true;
-  turnoComputadora(puntosJugadores[0], deck);
+  turnoComputadora(
+    puntosJugadores[0],
+    deck,
+    puntosJugadores,
+    puntosHTML,
+    divCartasJugadores
+  );
 });
 
 btnNuevo.addEventListener("click", () => {
