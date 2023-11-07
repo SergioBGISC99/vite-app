@@ -1,6 +1,11 @@
 import _ from "underscore";
 
-import { crearDeck, pedirCarta, valorCarta } from "./usecases";
+import {
+  crearDeck,
+  pedirCarta,
+  crearCarta,
+  turnoComputadora,
+} from "./usecases";
 
 let deck = [],
   puntosJugadores = [];
@@ -32,33 +37,6 @@ const inicializarJuego = (numJugadores = 2) => {
   btnDetener.disabled = false;
 };
 
-
-
-//
-const determinarGanador = () => {
-  const [puntosMinimos, puntosComputadora] = puntosJugadores;
-
-  setTimeout(() => {
-    if (puntosComputadora === puntosMinimos) alert("Empate 😢");
-    else if (puntosMinimos > 21) alert("Computadora gana 😖");
-    else if (puntosComputadora > 21) alert("Has ganado 🥳");
-    else alert("Gana el jugador 2 😖");
-  }, 100);
-};
-
-// Turno de de la computadora
-const turnoComputadora = (puntosMinimos) => {
-  let puntosComputadora = 0;
-
-  do {
-    const carta = pedirCarta(deck);
-    puntosComputadora = acumularPuntos(carta, puntosJugadores.length - 1);
-    crearCarta(carta, puntosJugadores.length - 1);
-  } while (puntosComputadora < puntosMinimos && puntosMinimos <= 21);
-
-  determinarGanador();
-};
-
 // Eventos
 btnPedir.addEventListener("click", () => {
   const carta = pedirCarta(deck);
@@ -70,19 +48,19 @@ btnPedir.addEventListener("click", () => {
     console.warn("Has perdido");
     btnPedir.disabled = true;
     btnDetener.disabled = true;
-    turnoComputadora(puntosJugador);
+    turnoComputadora(puntosJugador, deck, puntosJugadores);
   } else if (puntosJugador === 21) {
     console.warn("¿21? Genial");
     btnPedir.disabled = true;
     btnDetener.disabled = true;
-    turnoComputadora(puntosJugador);
+    turnoComputadora(puntosJugador, deck, puntosJugadores);
   }
 });
 
 btnDetener.addEventListener("click", () => {
   btnPedir.disabled = true;
   btnDetener.disabled = true;
-  turnoComputadora(puntosJugadores[0]);
+  turnoComputadora(puntosJugadores[0], deck);
 });
 
 btnNuevo.addEventListener("click", () => {
