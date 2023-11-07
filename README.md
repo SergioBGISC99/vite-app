@@ -6,6 +6,7 @@ Features:
 
 Play a traditional game of Blackjack against a computer dealer and a computer player.
 Challenge yourself and see if you can beat the house!
+
 How to Play:
 
-[Enjoy!](https://blackjack-vite-codecruncher.netlify.app)
+[Click Here](https://blackjack-vite-codecruncher.netlify.app) and have fun 🥳
